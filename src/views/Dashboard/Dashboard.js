@@ -232,7 +232,7 @@ const Dashboard = () => {
             </div>
             <br/>
             <div style={{"border": "2px solid white", "color": "white"}}>
-                <div className="d-flex justify-content-between">
+                <div className="d-flex justify-content-between align-items-center">
                     <div>
                         <h3>Bomb Farms</h3>
                         <p>Stake your LP tokens in our farms to start earning $BSHARE</p>
