@@ -17,14 +17,18 @@ import useTotalValueLocked from "../../hooks/useTotalValueLocked";
 import useCashPriceInEstimatedTWAP from "../../hooks/useCashPriceInEstimatedTWAP";
 import useBombFinance from "../../hooks/useBombFinance";
 import useTokenBalance from "../../hooks/useTokenBalance";
+import useBanks from "../../hooks/useBanks";
 import {getDisplayBalance} from '../../utils/formatBalance';
 
 import {Helmet} from "react-helmet"
 import CountUp from 'react-countup';
 import { roundAndFormatNumber } from '../../0x';
+import BombFarm from "./components/BombFarm"
 
 const TITLE = 'Dashboard'
 const Dashboard = () => {
+    const [banks] = useBanks();
+    const activeBanks = banks.filter((bank) => !bank.finished);
     const { to } = useTreasuryAllocationTimes();
     const currentEpoch = useCurrentEpoch();
     const bombStats = useBombStats();
@@ -204,65 +208,9 @@ const Dashboard = () => {
                     </div>
                     <button>Claim All &nbsp; <TokenSymbol size={20} symbol="BSHARE" /></button>
                 </div>
-                <div className="row">
-                    <div className="col-1"><TokenSymbol size={50} symbol="BOMB-BTCB-LP" /></div>
-                    <p className="col">BOMB-BTCB &nbsp;&nbsp;<span>Recommended</span></p>
-                    <div className="col-2">TVL: $1,008,430</div>
-                </div>
+                <BombFarm symbol="BOMB-BTCB-LP" banks={activeBanks}  />
                 <hr />
-                <div className="row">
-                    <div className="row col-5">
-                        <div className="col-4">
-                            <p>Daily Returns:</p>
-                            <strong><h3>2%</h3></strong>
-                        </div>
-                        <div className="col-4">
-                            <p>Your Stake:</p>
-                            <p><TokenSymbol size={30} symbol="BSHARE"/> 6.000</p>
-                            <p>≈&nbsp;$1171.62</p>
-                        </div>
-                        <div className="col-4">
-                            <p>Earned:</p>
-                            <p><TokenSymbol size={30} symbol="BOMB"/>1660.4413</p>
-                            <p>≈&nbsp;$298.88</p>
-                        </div>
-                    </div>
-                    <div className="d-flex align-items-end justify-content-end col" style={{"textAlign": "end"}}>
-                        <button >Deposit</button>
-                        <button >Withdraw</button>
-                        <button >Claim Rewards <TokenSymbol size={20} symbol="BSHARE" /></button>
-                    </div>
-                </div>
-                <hr />
-                <div className="row">
-                    <div className="col-1"><TokenSymbol size={50} symbol="BOMB-BNB-LP" /></div>
-                    <p className="col">BSHARE-BNB &nbsp;&nbsp;<span>Recommended</span></p>
-                    <div className="col-2">TVL: $1,008,430</div>
-                </div>
-                <hr />
-                <div className="row">
-                    <div className="row col-5">
-                        <div className="col-4">
-                            <p>Daily Returns:</p>
-                            <strong><h3>2%</h3></strong>
-                        </div>
-                        <div className="col-4">
-                            <p>Your Stake:</p>
-                            <p><TokenSymbol size={30} symbol="BSHARE"/> 6.000</p>
-                            <p>≈&nbsp;$1171.62</p>
-                        </div>
-                        <div className="col-4">
-                            <p>Earned:</p>
-                            <p><TokenSymbol size={30} symbol="BOMB"/>1660.4413</p>
-                            <p>≈&nbsp;$298.88</p>
-                        </div>
-                    </div>
-                    <div className="d-flex align-items-end justify-content-end col" style={{"textAlign": "end"}}>
-                        <button >Deposit</button>
-                        <button >Withdraw</button>
-                        <button >Claim Rewards <TokenSymbol size={20} symbol="BSHARE" /></button>
-                    </div>
-                </div>
+                <BombFarm symbol="BSHARE-BNB-LP" banks={activeBanks} />
             </div>
             <br />
             <div style={{"border": "2px solid white", "color": "white"}}>
