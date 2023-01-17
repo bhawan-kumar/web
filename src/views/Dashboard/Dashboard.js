@@ -17,15 +17,31 @@ import useTotalValueLocked from "../../hooks/useTotalValueLocked";
 import useCashPriceInEstimatedTWAP from "../../hooks/useCashPriceInEstimatedTWAP";
 import useBombFinance from "../../hooks/useBombFinance";
 import useTokenBalance from "../../hooks/useTokenBalance";
+import useFetchBoardroomAPR from "../../hooks/useFetchBoardroomAPR";
+import useTotalStakedOnBoardroom from "../../hooks/useTotalStakedOnBoardroom";
+import useEarningsOnBoardroom from "../../hooks/useEarningsOnBoardroom";
+import useStakedBalanceOnBoardroom from "../../hooks/useStakedBalanceOnBoardroom";
+import useStakedTokenPriceInDollars from "../../hooks/useStakedTokenPriceInDollars";
 import useBanks from "../../hooks/useBanks";
+
 import {getDisplayBalance} from '../../utils/formatBalance';
 
 import {Helmet} from "react-helmet"
 import CountUp from 'react-countup';
 import { roundAndFormatNumber } from '../../0x';
 import BombFarm from "./components/BombFarm"
+import { createGlobalStyle } from 'styled-components';
 
+import HomeImage from '../../assets/img/background.jpg';
+const BackgroundImage = createGlobalStyle`
+  body {
+    background: url(${HomeImage}) repeat !important;
+    background-size: cover !important;
+    background-color: #171923;
+  }
+`;
 const TITLE = 'Dashboard'
+
 const Dashboard = () => {
     const [banks] = useBanks();
     const activeBanks = banks.filter((bank) => !bank.finished);
@@ -38,6 +54,11 @@ const Dashboard = () => {
     const cashStat = useCashPriceInEstimatedTWAP();
     const bombFinance = useBombFinance();
     const bondBalance = useTokenBalance(bombFinance?.BBOND);
+    const boardroomAPR = useFetchBoardroomAPR();
+    const totalStaked = useTotalStakedOnBoardroom();
+    const earnings = useEarningsOnBoardroom();
+    const stakedBalance = useStakedBalanceOnBoardroom();
+    const stakedTokenPriceInDollars = useStakedTokenPriceInDollars('BSHARE', bombFinance.BSHARE);
 
     const bombTotalSupply = useMemo(() => (bombStats ? String(bombStats.totalSupply) : null), [bombStats]);
     const bombCirculatingSupply = useMemo(() => (bombStats ? String(bombStats.circulatingSupply) : null), [bombStats]);
@@ -52,9 +73,19 @@ const Dashboard = () => {
     const bSharePriceInBNB = useMemo(() => (bShareStats ? Number(bShareStats.tokenInFtm).toFixed(4) : null), [bShareStats],);
     const tBondPriceInBNB = useMemo(() => (tBondStats ? Number(tBondStats.tokenInFtm).toFixed(4) : null), [tBondStats]);
     const scalingFactor = useMemo(() => (cashStat ? Number(cashStat.priceInDollars).toFixed(4) : null), [cashStat]);
+    const tokenPriceInDollars = useMemo(() => (bombStats ? Number(bombStats.priceInDollars).toFixed(2) : null), [bombStats],);
+    const earnedInDollars = (Number(tokenPriceInDollars) * Number(getDisplayBalance(earnings))).toFixed(2);
+    const tokenPriceInDollarsForStake = useMemo(
+        () =>
+          stakedTokenPriceInDollars
+            ? (Number(stakedTokenPriceInDollars) * Number(getDisplayBalance(stakedBalance))).toFixed(2).toString()
+            : null,
+        [stakedTokenPriceInDollars, stakedBalance],
+      );
 
     return (
         <Page> 
+            <BackgroundImage />
             <Helmet>
                 <title>{TITLE}</title>
             </Helmet>
@@ -161,24 +192,24 @@ const Dashboard = () => {
                                     <p>Boardroom &nbsp;&nbsp;<span>Recommended</span></p>
                                     <p>Stake BSHARE and earn BOMB every epoch</p>
                                 </div>
-                                <div className="col-3">TVL: &nbsp;1,0008,430</div>
+                                <div className="col-3">TVL: &nbsp;{TVL.toFixed(2)}</div>
                             </div>
                             <hr />
-                            <p style={{"textAlign": "right"}}>Total Staked: <TokenSymbol size={30} symbol="BSHARE"/>&nbsp;7232</p>
+                            <p style={{"textAlign": "right"}}>Total Staked: <TokenSymbol size={30} symbol="BSHARE"/>&nbsp;{getDisplayBalance(totalStaked)}</p>
                             <div className="row">
                                 <div className="col-3">
                                     <p>Daily Returns:</p>
-                                    <strong><h3>2%</h3></strong>
+                                    <strong><h3>{(boardroomAPR / 365).toFixed(2)}%</h3></strong>
                                 </div>
                                 <div className="col-2">
                                     <p>Your Stake:</p>
-                                    <p><TokenSymbol size={30} symbol="BSHARE"/> 6.000</p>
-                                    <p>≈&nbsp;$1171.62</p>
+                                    <p><TokenSymbol size={30} symbol="BSHARE"/>{getDisplayBalance(stakedBalance)}</p>
+                                    <p>≈&nbsp;${tokenPriceInDollarsForStake}</p>
                                 </div>
                                 <div className="col-3">
                                     <p>Earned:</p>
-                                    <p><TokenSymbol size={30} symbol="BOMB"/>1660.4413</p>
-                                    <p>≈&nbsp;$298.88</p>
+                                    <p><TokenSymbol size={30} symbol="BOMB"/>{getDisplayBalance(earnings)}</p>
+                                    <p>≈&nbsp;${earnedInDollars}</p>
                                 </div>
                                 <div className="col-4">
                                     <div className="row">
