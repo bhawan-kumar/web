@@ -15,6 +15,9 @@ import usebShareStats from '../../hooks/usebShareStats';
 import useBondStats from '../../hooks/useBondStats';
 import useTotalValueLocked from "../../hooks/useTotalValueLocked";
 import useCashPriceInEstimatedTWAP from "../../hooks/useCashPriceInEstimatedTWAP";
+import useBombFinance from "../../hooks/useBombFinance";
+import useTokenBalance from "../../hooks/useTokenBalance";
+import {getDisplayBalance} from '../../utils/formatBalance';
 
 import {Helmet} from "react-helmet"
 import CountUp from 'react-countup';
@@ -29,6 +32,8 @@ const Dashboard = () => {
     const tBondStats = useBondStats();
     const TVL = useTotalValueLocked();
     const cashStat = useCashPriceInEstimatedTWAP();
+    const bombFinance = useBombFinance();
+    const bondBalance = useTokenBalance(bombFinance?.BBOND);
 
     const bombTotalSupply = useMemo(() => (bombStats ? String(bombStats.totalSupply) : null), [bombStats]);
     const bombCirculatingSupply = useMemo(() => (bombStats ? String(bombStats.circulatingSupply) : null), [bombStats]);
@@ -231,7 +236,7 @@ const Dashboard = () => {
                 <hr />
                 <div className="row">
                     <div className="col-1"><TokenSymbol size={50} symbol="BOMB-BNB-LP" /></div>
-                    <p className="col">BOMB-BTCB &nbsp;&nbsp;<span>Recommended</span></p>
+                    <p className="col">BSHARE-BNB &nbsp;&nbsp;<span>Recommended</span></p>
                     <div className="col-2">TVL: $1,008,430</div>
                 </div>
                 <hr />
@@ -273,23 +278,23 @@ const Dashboard = () => {
                 <div className="row">
                     <div className="col-3">
                         <p>Current Price: (Bomb)^2</p>
-                        <h4>BBond = 6.2872 BTCB</h4>
+                        <h4>BBond = {Number(tBondStats?.tokenInFtm).toFixed(4) || '-'} BTC</h4>
                     </div>
                     <div className="col-3">
                         <p>Available to redeem:</p>
-                        <h4><TokenSymbol size={30} symbol="BBOND" /> BBond = 6.2872 BTCB</h4>
+                        <h4><TokenSymbol size={30} symbol="BBOND" />{getDisplayBalance(bondBalance)}</h4>
                     </div>
                     <div className="col-2"></div>
                     <div className="col-4">
-                        <div className="d-flex justify-content-between">
+                        <div className="d-flex justify-content-between align-items-center">
                             <div>
                                 <p>Purchase BBond</p>
                                 <p>Bomb is over peg</p>
                             </div>
-                            <button>Purchase</button>
+                            <button disabled>Purchase</button>
                         </div>
                         <hr />
-                        <div className="d-flex justify-content-between">
+                        <div className="d-flex justify-content-between align-items-center">
                             <p>Redeem Bomb</p>
                             <button>Redeem</button>
                         </div>
