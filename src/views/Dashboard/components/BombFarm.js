@@ -79,10 +79,10 @@ const BombFarm = ({ symbol, banks }) => {
                         <p>≈&nbsp;${earnedInDollars}</p>
                     </div>
                 </div>
-                <div className="d-flex align-items-end justify-content-end col" style={{ "textAlign": "end" }}>
-                    <button onClick={approve} >Deposit</button>
-                    <button onClick={onRedeem}>Withdraw</button>
-                    <button onClick={onRedeem}>Claim Rewards <TokenSymbol size={20} symbol="BSHARE" /></button>
+                <div className="d-flex align-items-end justify-content-end col am" style={{ "textAlign": "end" }}>
+                    <button style={{ "margin": "5px" }} onClick={approve} >Deposit</button>
+                    <button style={{ "margin": "5px" }} onClick={onRedeem}>Withdraw</button>
+                    <button style={{ "margin": "5px" }} onClick={onRedeem}>Claim Rewards <TokenSymbol size={20} symbol="BSHARE" /></button>
                 </div>
             </div>
         </>

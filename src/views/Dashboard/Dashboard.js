@@ -1,4 +1,4 @@
-import React, {useMemo} from "react"
+import React, { useMemo } from "react"
 import moment from 'moment';
 import Page from "../../components/Page"
 import TokenSymbol from "../../components/TokenSymbol";
@@ -24,9 +24,9 @@ import useStakedBalanceOnBoardroom from "../../hooks/useStakedBalanceOnBoardroom
 import useStakedTokenPriceInDollars from "../../hooks/useStakedTokenPriceInDollars";
 import useBanks from "../../hooks/useBanks";
 
-import {getDisplayBalance} from '../../utils/formatBalance';
+import { getDisplayBalance } from '../../utils/formatBalance';
 
-import {Helmet} from "react-helmet"
+import { Helmet } from "react-helmet"
 import CountUp from 'react-countup';
 import { roundAndFormatNumber } from '../../0x';
 import BombFarm from "./components/BombFarm"
@@ -77,116 +77,118 @@ const Dashboard = () => {
     const earnedInDollars = (Number(tokenPriceInDollars) * Number(getDisplayBalance(earnings))).toFixed(2);
     const tokenPriceInDollarsForStake = useMemo(
         () =>
-          stakedTokenPriceInDollars
-            ? (Number(stakedTokenPriceInDollars) * Number(getDisplayBalance(stakedBalance))).toFixed(2).toString()
-            : null,
+            stakedTokenPriceInDollars
+                ? (Number(stakedTokenPriceInDollars) * Number(getDisplayBalance(stakedBalance))).toFixed(2).toString()
+                : null,
         [stakedTokenPriceInDollars, stakedBalance],
-      );
+    );
 
     return (
-        <Page> 
+        <Page>
             <BackgroundImage />
             <Helmet>
                 <title>{TITLE}</title>
             </Helmet>
-            <div style={{"border": "2px solid white"}}>
-            <h1 style={{"color": "white", "textAlign": "center", "textTransform": "capitalize", "fontWeight": 100}}>Bomb Finance Summary</h1>
-            <hr/>
-            <div style={{"display": "flex", "justifyContent": "space-between"}}>
-                <Table style={{"width": "auto"}}>
-                    <TableHead>
-                        <TableRow>
-                            <TableCell></TableCell>
-                            <TableCell>Current Supply</TableCell>
-                            <TableCell>Total Supply</TableCell>
-                            <TableCell>Price</TableCell>
-                            <TableCell></TableCell>
-                        </TableRow>
-                    </TableHead>
-                    <TableBody>
-                        <TableRow>
-                            <TableCell>
-                                <TokenSymbol symbol="BOMB" />
-                            </TableCell>
-                            <TableCell>{roundAndFormatNumber(bombCirculatingSupply, 2)}</TableCell>
-                            <TableCell>{roundAndFormatNumber(bombTotalSupply, 2)}</TableCell>
-                            <TableCell>
-                                ${bombPriceInDollars ? roundAndFormatNumber(bombPriceInDollars, 2) : '-.--'}<br/> 
-                                {bombPriceInBNB ? bombPriceInBNB : '-.----'} BTC
-                            </TableCell>
-                            <TableCell>
-                                <img alt="metamask fox" src={MetamaskFox} />
-                            </TableCell>
-                        </TableRow>
-                    </TableBody>
-                    <TableBody>
-                        <TableRow>
-                            <TableCell>
-                                <TokenSymbol symbol="BSHARE" />
-                            </TableCell>
-                            <TableCell>{roundAndFormatNumber(bShareCirculatingSupply, 2)}</TableCell>
-                            <TableCell>{roundAndFormatNumber(bShareTotalSupply, 2)}</TableCell>
-                            <TableCell>
-                                ${bSharePriceInDollars ? bSharePriceInDollars : '-.--'}<br />
-                                {bSharePriceInBNB ? bSharePriceInBNB : '-.----'} BNB
-                            </TableCell>
-                            <TableCell>
-                                <img alt="metamask fox" src={MetamaskFox} />
-                            </TableCell>
-                        </TableRow>
-                    </TableBody>
-                    <TableBody>
-                        <TableRow>
-                            <TableCell>
-                                <TokenSymbol symbol="BBOND" />
-                            </TableCell>
-                            <TableCell>{roundAndFormatNumber(tBondCirculatingSupply, 2)}</TableCell>
-                            <TableCell>{roundAndFormatNumber(tBondTotalSupply, 2)}</TableCell>
-                            <TableCell>
-                                ${tBondPriceInDollars ? tBondPriceInDollars : '-.--'}<br />
-                                {tBondPriceInBNB ? tBondPriceInBNB : '-.----'} BTC
-                            </TableCell>
-                            <TableCell>
-                                <img alt="metamask fox" src={MetamaskFox} />
-                            </TableCell>
-                        </TableRow>
-                    </TableBody>
-                </Table>
-                <div style={{"textAlign": "center"}}>
-                    <div>
-                        <Typography variant="h6">Current Epoch</Typography>
-                        <Typography variant="h3">{Number(currentEpoch)}</Typography>
-                    </div>
-                    <hr/>
-                    <div style={{"color": "white"}}>
-                        <Typography variant="h2">
-                            <ProgressCountdown base={moment().toDate()} hideBar={true} deadline={to} description="Next Epoch" />
-                        </Typography>
-                        <Typography variant="h6">Next Epoch in</Typography>
+            <div className="section border" >
+                <h1 style={{ "color": "white", "textAlign": "center", "textTransform": "capitalize", "fontWeight": 100 }}>Bomb Finance Summary</h1>
+                <hr />
+                <div style={{ "display": "flex", "justifyContent": "space-between" }}>
+                    <Table style={{ "width": "auto" }}>
+                        <TableHead>
+                            <TableRow>
+                                <TableCell></TableCell>
+                                <TableCell>Current Supply</TableCell>
+                                <TableCell>Total Supply</TableCell>
+                                <TableCell>Price</TableCell>
+                                <TableCell></TableCell>
+                            </TableRow>
+                        </TableHead>
+                        <TableBody>
+                            <TableRow>
+                                <TableCell>
+                                    <TokenSymbol size={50} symbol="BOMB" />
+                                </TableCell>
+                                <TableCell>{roundAndFormatNumber(bombCirculatingSupply, 2)}</TableCell>
+                                <TableCell>{roundAndFormatNumber(bombTotalSupply, 2)}</TableCell>
+                                <TableCell>
+                                    ${bombPriceInDollars ? roundAndFormatNumber(bombPriceInDollars, 2) : '-.--'}<br />
+                                    {bombPriceInBNB ? bombPriceInBNB : '-.----'} BTC
+                                </TableCell>
+                                <TableCell>
+                                    <img alt="metamask fox" src={MetamaskFox} />
+                                </TableCell>
+                            </TableRow>
+                        </TableBody>
+                        <TableBody>
+                            <TableRow>
+                                <TableCell>
+                                    <TokenSymbol size={50} symbol="BSHARE" />
+                                </TableCell>
+                                <TableCell>{roundAndFormatNumber(bShareCirculatingSupply, 2)}</TableCell>
+                                <TableCell>{roundAndFormatNumber(bShareTotalSupply, 2)}</TableCell>
+                                <TableCell>
+                                    ${bSharePriceInDollars ? bSharePriceInDollars : '-.--'}<br />
+                                    {bSharePriceInBNB ? bSharePriceInBNB : '-.----'} BNB
+                                </TableCell>
+                                <TableCell>
+                                    <img alt="metamask fox" src={MetamaskFox} />
+                                </TableCell>
+                            </TableRow>
+                        </TableBody>
+                        <TableBody>
+                            <TableRow>
+                                <TableCell>
+                                    <TokenSymbol size={50} symbol="BBOND" />
+                                </TableCell>
+                                <TableCell>{roundAndFormatNumber(tBondCirculatingSupply, 2)}</TableCell>
+                                <TableCell>{roundAndFormatNumber(tBondTotalSupply, 2)}</TableCell>
+                                <TableCell>
+                                    ${tBondPriceInDollars ? tBondPriceInDollars : '-.--'}<br />
+                                    {tBondPriceInBNB ? tBondPriceInBNB : '-.----'} BTC
+                                </TableCell>
+                                <TableCell>
+                                    <img alt="metamask fox" src={MetamaskFox} />
+                                </TableCell>
+                            </TableRow>
+                        </TableBody>
+                    </Table>
+                    <div style={{ "textAlign": "center" }}>
+                        <div>
+                            <Typography variant="h6">Current Epoch</Typography>
+                            <Typography variant="h3">{Number(currentEpoch)}</Typography>
+                        </div>
                         <hr />
-                        <span>Live TWAP: &nbsp;1.17</span><br/>
-                        <span>
-                            TVL: &nbsp;<CountUp  end={TVL} separator="," prefix="$" />
-                        </span><br/>
-                        <span>Last Epoch TWAP: &nbsp;{scalingFactor}</span>
+                        <div style={{ "color": "white" }}>
+                            <Typography variant="h2">
+                                <ProgressCountdown base={moment().toDate()} hideBar={true} deadline={to} description="Next Epoch" />
+                            </Typography>
+                            <Typography variant="h6">Next Epoch in</Typography>
+                            <hr />
+                            <span>Live TWAP: &nbsp;1.17</span><br />
+                            <span>
+                                TVL: &nbsp;<CountUp end={TVL} separator="," prefix="$" />
+                            </span><br />
+                            <span>Last Epoch TWAP: &nbsp;{scalingFactor}</span>
+                        </div>
                     </div>
                 </div>
             </div>
-            </div>
             <br />
-            <div style={{"border": "2px solid white", "color": "white"}}>
+            <div className="section border" style={{ "color": "white" }}>
                 <div className="row">
                     <div className="col-8">
-                        <h4>Read Investemnt Strategy</h4>
-                        <button>Invest Now</button>
-                        <div className="row">
-                            <button className="col">Chat on Discord</button>
-                            <button className="col">Read Docs</button>
+                        <p style={{ "textAlign": "end" }}>
+                            <a style={{ "color": "rgba(158, 230, 255, 1)", "marginRight": "2em" }} href="#">Read Investemnt Strategy</a>
+                        </p><br />
+                        <button className="investNow">Invest Now</button>
+                        <div className="row d-flex justify-content-around mt-3">
+                            <button className="col-5 contact">Chat on Discord</button>
+                            <button className="col-5 contact">Read Docs</button>
                         </div>
-                        <div className="card">
+                        <div className="card boardroom border">
                             <div className="row">
                                 <div className="col-1">
-                                    <TokenSymbol symbol="BSHARE" />
+                                    <TokenSymbol size={50} symbol="BSHARE" />
                                 </div>
                                 <div className="col">
                                     <p>Boardroom &nbsp;&nbsp;<span>Recommended</span></p>
@@ -195,26 +197,26 @@ const Dashboard = () => {
                                 <div className="col-3">TVL: &nbsp;{TVL.toFixed(2)}</div>
                             </div>
                             <hr />
-                            <p style={{"textAlign": "right"}}>Total Staked: <TokenSymbol size={30} symbol="BSHARE"/>&nbsp;{getDisplayBalance(totalStaked)}</p>
+                            <p style={{ "textAlign": "right" }}>Total Staked: <TokenSymbol size={30} symbol="BSHARE" />&nbsp;{getDisplayBalance(totalStaked)}</p>
                             <div className="row">
-                                <div className="col-3">
+                                <div className="col-2">
                                     <p>Daily Returns:</p>
                                     <strong><h3>{(boardroomAPR / 365).toFixed(2)}%</h3></strong>
                                 </div>
-                                <div className="col-2">
+                                <div className="col-3">
                                     <p>Your Stake:</p>
-                                    <p><TokenSymbol size={30} symbol="BSHARE"/>{getDisplayBalance(stakedBalance)}</p>
+                                    <p><TokenSymbol size={30} symbol="BSHARE" />{getDisplayBalance(stakedBalance)}</p>
                                     <p>≈&nbsp;${tokenPriceInDollarsForStake}</p>
                                 </div>
                                 <div className="col-3">
                                     <p>Earned:</p>
-                                    <p><TokenSymbol size={30} symbol="BOMB"/>{getDisplayBalance(earnings)}</p>
+                                    <p><TokenSymbol size={30} symbol="BOMB" />{getDisplayBalance(earnings)}</p>
                                     <p>≈&nbsp;${earnedInDollars}</p>
                                 </div>
                                 <div className="col-4">
-                                    <div className="row">
-                                        <button className="col">Deposit</button>
-                                        <button className="col">Withdraw</button>
+                                    <div className="row my-2">
+                                        <button className="col m-1">Deposit</button>
+                                        <button className="col m-1">Withdraw</button>
                                     </div>
                                     <div className="row">
                                         <button className="col">Claim Rewards</button>
@@ -223,31 +225,31 @@ const Dashboard = () => {
                             </div>
                         </div>
                     </div>
-                    <div className="col-4 card">
+                    <div className="col-4 card border">
                         <div className="card-body">
                             <h5 className="card-title">Latest News</h5>
                         </div>
                     </div>
                 </div>
             </div>
-            <br/>
-            <div style={{"border": "2px solid white", "color": "white"}}>
-                <div className="d-flex justify-content-between align-items-center">
+            <br />
+            <div className="section border" style={{ "color": "white" }}>
+                <div className="d-flex justify-content-between align-items-center mb-5">
                     <div>
                         <h3>Bomb Farms</h3>
                         <p>Stake your LP tokens in our farms to start earning $BSHARE</p>
                     </div>
                     <button>Claim All &nbsp; <TokenSymbol size={20} symbol="BSHARE" /></button>
                 </div>
-                <BombFarm symbol="BOMB-BTCB-LP" banks={activeBanks}  />
+                <BombFarm symbol="BOMB-BTCB-LP" banks={activeBanks} />
                 <hr />
                 <BombFarm symbol="BSHARE-BNB-LP" banks={activeBanks} />
             </div>
             <br />
-            <div style={{"border": "2px solid white", "color": "white"}}>
+            <div className="section border" style={{ "color": "white" }}>
                 <div className="row">
                     <div className="col-1">
-                        <TokenSymbol symbol="BBOND"/>
+                        <TokenSymbol symbol="BBOND" />
                     </div>
                     <div className="col">
                         <h3>Bonds</h3>

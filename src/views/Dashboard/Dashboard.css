@@ -1,3 +1,54 @@
 .card {
     background-color: transparent;
 }
+
+.border {
+    border: 1px solid #728CDF !important;
+}
+
+.section {
+    border-radius: 5px;
+    background: rgba(35, 40, 75, 0.75);
+    backdrop-filter: blur(5px);
+    border-radius: 10px;
+    padding: 2em;
+}
+
+p {
+    margin: 0;
+}
+
+.boardroom {
+    margin-top: 2em;
+    padding: 2em;
+}
+
+button {
+    border-radius: 3em;
+    border: 1px solid white;
+    background: transparent;
+    color: white;
+    padding: 5px 30px;
+    text-align: center;
+}
+
+button:disabled {
+    border: 1px solid grey;
+    color: grey;
+}
+
+.investNow {
+    width: -webkit-fill-available;
+    border-radius: 5px;
+    background-image: linear-gradient(to right, rgba(0, 245, 171, 0.5), rgba(0, 173, 232, 0.5));
+    font-weight: bold;
+    border: none;
+}
+
+.contact {
+    border-radius: 5px;
+    background-color: rgba(255, 255, 255, 0.3);
+    font-weight: bold;
+    border: none;
+    color: black;
+}
